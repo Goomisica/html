@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <header>
+    </header>
+    
+    <body>
+        <input type="file" id="fileInput" />
+        <div id="output">
+    
+        </div>
+
+        <script src="papaparse.js"></script>
+        <script src="rbql.js"></script>
+        <script>
+            document.getElementById('fileInput').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (!file) {
+                    console.log("No file selected!");
+                    return;
+                }
+                Papa.parse(file, {complete: function(results, file) {
+                        let res = [];
+                        let warnings = [];
+                        let error_handler = function(exception) {
+                            console.log('RBQL finished with error: ' + String(exception));
+                        }
+                        let success_handler = function() {
+                            document.getElementById("output").textContent = JSON.stringify(res);
+                        }
+                        let startTime = Date.now() / 1000;
+                        rbql.query_table('select *', results["data"], res, warnings).then(success_handler).catch(error_handler);
+                }});
+            });
+        </script>
+    </body>
+</html>
