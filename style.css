@@ -1,0 +1,62 @@
+body {
+    display: block;
+    background-color: #111;
+    color: white;
+}
+
+#sidebarNav {
+    font-size:30px;
+    cursor:pointer;
+}
+
+#main {
+    margin-left: 0px;
+    animation-timing-function: ease-out;
+    transition: 0.5s;
+}
+
+.sidebar {
+    height:100%;
+    width: 0px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: black;
+    overflow-x: hidden;
+    animation-timing-function: ease-out;
+    transition: 0.5s;
+}
+
+.sidebar a {
+  padding: 0.5rem;
+  text-decoration: none;
+  font-size: 2rem;
+  color: whitesmoke;
+  display: block;
+  animation-timing-function: ease-out;
+  transition: 0.5s;
+}
+
+.sidebarColumn {
+  float: left;
+  width: 50%;
+}
+
+.sidebar #sidebarCloseBtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 2.5rem;
+  margin-left: 50px;
+}
+
+/*phone specific changes*/
+@media (max-width: 1000px) {
+    #sidebarNav {
+        font-size: 6rem;
+    }
+    .sidebar #sidebarCloseBtn {
+        font-size: 8rem;
+    }
+}
