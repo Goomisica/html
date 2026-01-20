@@ -38,17 +38,23 @@ body {
   transition: 0.5s;
 }
 
-.sidebarColumn {
-  float: left;
-  width: 50%;
+#sidebarColumn {
+    display: grid;
+    grid-template-columns: auto auto auto;
 }
 
 .sidebar #sidebarCloseBtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 2.5rem;
-  margin-left: 50px;
+    float: right;
+    right: 25px;
+    font-size: 2.5rem;
+}
+
+#sidebarSearch {
+
+}
+
+#searchAndClose {
+
 }
 
 /*phone specific changes*/
@@ -58,5 +64,8 @@ body {
     }
     .sidebar #sidebarCloseBtn {
         font-size: 8rem;
+    }
+    .sidebar a {
+        font-size: 3rem;
     }
 }

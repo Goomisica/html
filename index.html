@@ -5,15 +5,22 @@
     </header>
     
     <body>
-        <div class="sidebar" id="sidebarDiv">
-            <span style="cursor: pointer;" id="sidebarCloseBtn" onclick="closeNav()">&times;</span>
-            <div class="sidebarColumn" id="sidebarColumn1"></div>
-            <div class="sidebarColumn" id="sidebarColumn2"></div>
-        </div>
-
+        
         <div id="main">
+            <div class="sidebar" id="sidebarDiv" :style="{width: navWidth + 'px'}">
+                
+                <div id="searchAndClose">
+                    <span style="cursor: pointer; float:right" id="sidebarCloseBtn" @click="closeNav">&times;</span>
+                    <span id="sidebarSearch"><input v-model="search"></span>
+                </div>
+
+                <div id="sidebarColumn" style="display:none">
+                    <a v-for="team in searchedTeams" :href="'?' + team[0]">{{team[0]}}</a>
+                </div>
+            </div>
+
             <div>
-                <span id="sidebarNav" onclick="openNav()">&#9776;</span>
+                <span id="sidebarNav" @click="openNav">&#9776;</span>
             </div>
 
             <div id="video">
@@ -23,101 +30,11 @@
             
     
     
-            <input type="file" id="fileInput" />
-            <div id="output">
-        
-            </div>
+            <input type="file" id="fileInput" @change="fileChange"/>
         </div>
 
         <script src="papaparse.js"></script>
         <script src="rbql.js"></script>
-        <script>
-            var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-
-            function openNav() {
-                let sidebarWidth = document.body.clientWidth + "px";
-                document.getElementById("sidebarDiv").style.width = sidebarWidth;
-            }
-
-            function closeNav() {
-                document.getElementById("sidebarDiv").style.width = "0";
-            }
-
-            document.getElementById('fileInput').addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (!file) {
-                    console.log("No file selected!");
-                    return;
-                }
-                Papa.parse(file, {complete: function(results, file) {
-                        console.log("parsed!")
-                        let res = [];
-                        let warnings = [];
-                        let tableHeaders = results["data"].splice(0, 1)[0]; //assuming first row is headers
-                        let error_handler = function(exception) {
-                            console.log('RBQL finished with error: ' + String(exception));
-                        }
-                        let success_handler = function() {
-                            document.getElementById("output").textContent = JSON.stringify(res);
-                            res.forEach((element, index) => {
-                                const newA = document.createElement("a");
-                                    newA.innerText = element;
-                                    newA.href = element;
-                                if (index >= res.length/2) {
-                                    document.getElementById("sidebarColumn2").appendChild(newA);
-                                }
-                                else {
-                                    document.getElementById("sidebarColumn1").appendChild(newA);
-                                }
-                            });
-                        }
-                        rbql.query_table('select a.Index limit 1000', results["data"], res, warnings, null, tableHeaders).then(success_handler).catch(error_handler);
-                }});
-            });
-
-
-            var player;
-            function onYouTubeIframeAPIReady() {
-                player = new YT.Player('video', {
-                height: '390',
-                width: '640',
-                videoId: 'M7lc1UVf-VE',
-                playerVars: {
-                    'playsinline': 1
-                },
-                events: {
-                    'onReady': onPlayerReady,
-                    'onStateChange': onPlayerStateChange
-                }
-                });
-            }
-            
-            function onPlayerReady(event) {
-                event.target.playVideo();
-            }
-
-            function onPlayerStateChange(event) {
-                if (event.data == YT.PlayerState.PLAYING) {
-                    videoPlaying = true;
-                }
-                else {
-                    videoPlaying = false;
-                }
-            }
-
-            setInterval(getVideoTime, 10);
-            var videoPlaying = false;
-            function getVideoTime() {
-                if (videoPlaying == true) {
-                    console.log("ran!");
-                    
-                    document.getElementById("time").innerText = "Video Time: " + (player.getCurrentTime()/player.getDuration())*100 + "%";
-                }
-            }
-        </script>
+        <script type="module" src="index.js"></script>
     </body>
 </html>
