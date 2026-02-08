@@ -2,8 +2,23 @@ body {
     display: block;
     background-color: #111;
     color: white;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 0;
 }
 
+/* __PASSWORD PAGE__ */
+#passwd {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* __MAIN PAGE__ */
 #sidebarNav {
     font-size:30px;
     cursor:pointer;
@@ -40,7 +55,7 @@ body {
 
 #sidebarColumn {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto;
 }
 
 .sidebar #sidebarCloseBtn {
