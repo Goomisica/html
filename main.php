@@ -25,7 +25,7 @@
                 </div>
 
                 <div id="sidebarColumn" style="display:none">
-                    <a v-for="team in searchedTeams" :href="'test.html?' + team">{{team}}</a>
+                    <a v-for="team in searchedTeams" :href="'data.php?team=' + team">{{team}}</a>
                 </div>
             </div>
 
